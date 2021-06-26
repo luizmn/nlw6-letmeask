@@ -1,6 +1,11 @@
+import { Button } from './components/Button';
+
 function App() {
   return (
-    <h1>Letmeask App</h1>
+    <div>
+      <h1>Letmeask App</h1>
+      <Button />
+    </div>
   );
 }
 
