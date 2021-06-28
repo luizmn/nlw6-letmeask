@@ -1,7 +1,7 @@
-import { Button } from '../components/Button';
+import { Button } from '../../components/Button';
 
-import logoImg from '../assets/images/logo.svg';
-import googleIconImg from '../assets/images/google-icon.svg';
+import logoImg from '../../assets/images/logo.svg';
+import googleIconImg from '../../assets/images/google-icon.svg';
 
 import '../styles/global.scss';
 import '../styles/auth.scss';

@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom'
 
-import logoImg from '../assets/images/logo.svg';
+import logoImg from '../../assets/images/logo.svg';
 
-import { Button } from '../components/Button';
-import { RoomCode } from '../components/RoomCode';
-import { useAuth } from '../hooks/useAuth';
-import { database } from '../services/firebase';
+import { Button } from '../../components/Button';
+import { RoomCode } from '../../components/RoomCode';
+import { useAuth } from '../../hooks/useAuth';
+import { database } from '../../services/firebase';
 
-import '../styles/room.scss';
+import './styles.scss';
 
 type FirebaseQuestions = Record<string, {
   author: {
@@ -19,6 +19,7 @@ type FirebaseQuestions = Record<string, {
   content: string;
   isAnswered: boolean;
   isHighlighted: boolean;
+  createdAt: string; //added this field to list the 10 latest questions created at room
 }>
 
 type Question = {
@@ -30,6 +31,7 @@ type Question = {
   content: string;
   isAnswered: boolean;
   isHighlighted: boolean;
+  createdAt: string;
 }
 
 type RoomParams = {
@@ -47,10 +49,11 @@ export function Room() {
 
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`); // Get the room reference
-
+    // .orderBy("createdAt", "asc").limit(10)
     roomRef.on('value', room => { // Get room questions
       const databaseRoom = room.val();
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+
 
       const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
         return {
@@ -59,6 +62,7 @@ export function Room() {
           author: value.author,
           isHighlighted: value.isHighlighted,
           isAnswered: value.isAnswered,
+          createdAt: value.createdAt,
         }
       })
 
@@ -85,7 +89,8 @@ export function Room() {
         avatar: user.avatar,
       },
       isHighlighted: false,
-      isAnswered: false
+      isAnswered: false,
+      createdAt: Date.now(),
     };
 
     await database.ref(`rooms/${roomId}/questions`).push(question);
@@ -129,6 +134,7 @@ export function Room() {
         </form>
 
         {JSON.stringify(questions)}
+
       </main>
     </div>
   );
