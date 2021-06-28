@@ -2,37 +2,19 @@ import { useEffect } from 'react';
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom'
 
+import { format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR'
+
 import logoImg from '../../assets/images/logo.svg';
 
 import { Button } from '../../components/Button';
 import { RoomCode } from '../../components/RoomCode';
+import { Question } from '../../components/Question';
 import { useAuth } from '../../hooks/useAuth';
 import { database } from '../../services/firebase';
 
 import './styles.scss';
-
-type FirebaseQuestions = Record<string, {
-  author: {
-    name: string;
-    avatar: string;
-  }
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-  createdAt: string; //added this field to list the 10 latest questions created at room
-}>
-
-type Question = {
-  id: string;
-  author: {
-    name: string;
-    avatar: string;
-  }
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-  createdAt: string;
-}
+import { useRoom } from '../../hooks/useRoom';
 
 type RoomParams = {
   id: string;
@@ -42,34 +24,9 @@ export function Room() {
   const { user } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [title, setTitle] = useState('');
-
   const roomId = params.id;
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`); // Get the room reference
-    // .orderBy("createdAt", "asc").limit(10)
-    roomRef.on('value', room => { // Get room questions
-      const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-        return {
-          id: key,
-          content: value.content,
-          author: value.author,
-          isHighlighted: value.isHighlighted,
-          isAnswered: value.isAnswered,
-          createdAt: value.createdAt,
-        }
-      })
-
-      setTitle(databaseRoom.title);
-      setQuestions(parsedQuestions);
-    })
-  }, [roomId]);
+  const {questions, title } = useRoom(roomId);
+  
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -82,6 +39,13 @@ export function Room() {
       throw new Error('You must be logged in');
     }
 
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    const createdFormatted = today.toISOString();
+
+    console.log("time formatted:");
+    console.log(createdFormatted);
+
     const question = {
       content: newQuestion,
       author: {
@@ -90,7 +54,7 @@ export function Room() {
       },
       isHighlighted: false,
       isAnswered: false,
-      createdAt: Date.now(),
+      createdAt: createdFormatted,
     };
 
     await database.ref(`rooms/${roomId}/questions`).push(question);
@@ -133,8 +97,20 @@ export function Room() {
           </div>
         </form>
 
-        {JSON.stringify(questions)}
+        {/* {JSON.stringify(questions)} display question object*/}
+        <div className="question-list">
+          {questions.map(question => {
+            return (
+              <Question
+              key={question.id}
+              content={question.content}
+              author={question.author}
+              createdAt={format(parseISO(question.createdAt), 'dd/MMM/yyyy - HH:mm:ss a', { locale: ptBR }) || "N/A"}
+              />
+            );
 
+          })}
+        </div>
       </main>
     </div>
   );
