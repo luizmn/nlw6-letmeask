@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { database } from "../services/firebase";
+import { useAuth } from "./useAuth";
 
 type QuestionType = {
   id: string;
@@ -12,6 +13,8 @@ type QuestionType = {
   isAnswered: boolean;
   isHighlighted: boolean;
   createdAt: string;
+  likeCount: number;
+  likeId: string | undefined;
 }
 
 type FirebaseQuestions = Record<string, {
@@ -23,6 +26,9 @@ type FirebaseQuestions = Record<string, {
   isAnswered: boolean;
   isHighlighted: boolean;
   createdAt: string; //added this field to list the 10 latest questions created at room
+  likes: Record<string, {
+    authorId: string;
+  }>;
 }>
 
 type RoomParams = {
@@ -30,14 +36,16 @@ type RoomParams = {
 }
 
 export function useRoom(roomId: string) {
+  const { user } = useAuth();
   const [questions, setQuestions] = useState<QuestionType[]>([])
   const [title, setTitle] = useState('');
   const params = useParams<RoomParams>();
     
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`); // Get the room reference
+      
     // .orderBy("createdAt", "asc").limit(10)
-    roomRef.on('value', room => { // Get room questions
+     roomRef.on('value', room => { // Get room questions
       const databaseRoom = room.val();
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
 
@@ -50,13 +58,20 @@ export function useRoom(roomId: string) {
           isHighlighted: value.isHighlighted,
           isAnswered: value.isAnswered,
           createdAt: value.createdAt,
+          likeCount: Object.values(value.likes ?? {}).length,
+          likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0],
         }
       })
 
       setTitle(databaseRoom.title);
       setQuestions(parsedQuestions);
     })
-  }, [roomId]);
+
+    return () => {
+      roomRef.off('value');
+    }
+
+  }, [roomId, user?.id]);
 
   return { questions, title };
 }

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import './styles.scss';
 
 type QuestionProps = {
@@ -7,12 +8,14 @@ type QuestionProps = {
     avatar: string;
   }
   createdAt: string;
+  children?: ReactNode;
 }
 
 export function Question({
   content,
   author,
   createdAt,
+  children,
 }: QuestionProps) { //props: - get all info |  { field1, field2 } - get only what you need
   return (
     <div className="question">
@@ -23,7 +26,7 @@ export function Question({
           <span>Author: {author.name}</span>
           <span>{createdAt}</span>
         </div>
-        <div>Buttons</div>
+        <div>{children}</div>
       </footer>
     </div>
   );

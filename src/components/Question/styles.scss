@@ -44,7 +44,8 @@
       &.like-button {
         display: flex;
         align-items: flex-end;
-        color: #737380;
+        // color: #737380;
+        color: var(--gray-500);
         gap: 8px;
 
         &.liked {
