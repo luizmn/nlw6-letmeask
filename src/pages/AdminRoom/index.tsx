@@ -61,12 +61,17 @@ export function AdminRoom() {
 
 
   async function handleEndRoom() {
-    await database.ref(`rooms/${roomId}`).update({
-      closedAt: new Date(),
-    })
+     if (window.confirm('Warning: This action is irreversible. Do you want to terminate this room?  ')) {
+      await database.ref(`rooms/${roomId}`).update({
+        closedAt: new Date(),
+      })
+
+      history.push('/');
+      }
     
-    history.push('/');
   }
+
+
   async function handleDeleteQuestion(questionId: string) {
     //TODO create modal
     // if (window.confirm('Warning: This action is irreversible. Do you want to delete question?  ')) {
