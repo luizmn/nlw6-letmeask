@@ -110,3 +110,27 @@
     }
   }
 }
+
+#confirm-modal {
+  top: "50%";
+  left: "50%";
+  right: "auto";
+  bottom: "auto";
+  width: "20%";
+  transform: "translate(-40%, -10%)";
+  gap: 10px;
+
+  .react-modal-close {
+    display: flex;
+    right: 1rem;
+    background: transparent;
+    border: 0;
+    color: var(--purple-800);
+    cursor: pointer;
+
+    transition: filter 0.2s;
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 import { Room } from './pages/Room';
 import { AdminRoom } from './pages/AdminRoom';
 
+
 //export const TestContext = createContext({} as any); // as any = hack to force not to type the info
 
 function App() {

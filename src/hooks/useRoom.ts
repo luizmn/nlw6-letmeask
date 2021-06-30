@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";
 
@@ -31,15 +31,15 @@ type FirebaseQuestions = Record<string, {
   }>;
 }>
 
-type RoomParams = {
-  id: string;
-}
+// type RoomParams = {
+//   id: string;
+// }
 
 export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<QuestionType[]>([])
   const [title, setTitle] = useState('');
-  const params = useParams<RoomParams>();
+  // const params = useParams<RoomParams>();
     
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`); // Get the room reference
