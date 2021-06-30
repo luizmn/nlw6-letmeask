@@ -31,15 +31,10 @@ type FirebaseQuestions = Record<string, {
   }>;
 }>
 
-// type RoomParams = {
-//   id: string;
-// }
-
 export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<QuestionType[]>([])
   const [title, setTitle] = useState('');
-  // const params = useParams<RoomParams>();
     
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`); // Get the room reference
@@ -47,8 +42,8 @@ export function useRoom(roomId: string) {
     // .orderBy("createdAt", "asc").limit(10)
      roomRef.on('value', room => { // Get room questions
       const databaseRoom = room.val();
+      
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-
 
       const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
         return {

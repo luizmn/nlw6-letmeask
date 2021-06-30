@@ -3,8 +3,6 @@ import { useState, createContext, useEffect, ReactNode } from 'react';
 import firebase from 'firebase';
 import { auth } from '../services/firebase';
 
-
-
 type User = {
   id: string;
   name: string;

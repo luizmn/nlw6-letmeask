@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { database } from '../services/firebase';
 
 
-
 export function NewRoom() {
 
   const { user } = useAuth();

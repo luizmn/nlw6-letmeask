@@ -3,12 +3,10 @@ import { useHistory, useParams } from 'react-router-dom'
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR'
 
-import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
 import closeImg from '../../assets/images/close.svg';
 
 import { Button } from '../../components/Button';
-import { RoomCode } from '../../components/RoomCode';
 import { Question } from '../../components/Question';
 
 import './styles.scss';
@@ -16,17 +14,19 @@ import { useRoom } from '../../hooks/useRoom';
 import { database } from '../../services/firebase';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import { Header } from '../../components/Header';
+
+Modal.setAppElement('#root');
 
 type RoomParams = {
   id: string;
+  // authorId: string;
 }
 
 
 export function AdminRoom() {
   const history = useHistory();
-  // const { user } = useAuth();
   const params = useParams<RoomParams>();
-  // const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
 
   const {questions, title } = useRoom(roomId);
@@ -71,7 +71,6 @@ export function AdminRoom() {
     
   }
 
-
   async function handleDeleteQuestion(questionId: string) {
     //TODO create modal
     // if (window.confirm('Warning: This action is irreversible. Do you want to delete question?  ')) {
@@ -82,11 +81,12 @@ export function AdminRoom() {
 
   return (
     <div id="page-room">
-      <header>
-        <div className="content">
-          <img src={logoImg} alt="Letmeask" />
-          <div>
-            <RoomCode code={roomId} />
+      <Header />
+      <main>
+        <div className="room-title">
+          <h1>Sala {title}</h1>
+          { questions.length > 0 && <span>{questions.length} question(s)</span> }
+          <div className="terminate-button">
             <Button 
             isOutlined 
             onClick={handleEndRoom}
@@ -94,13 +94,6 @@ export function AdminRoom() {
               Terminate Room
             </Button>
           </div>
-        </div>
-      </header>
-
-      <main>
-        <div className="room-title">
-          <h1>Sala {title}</h1>
-          { questions.length > 0 && <span>{questions.length} question(s)</span> }
         </div>
 
         <div className="question-list">
@@ -123,9 +116,6 @@ export function AdminRoom() {
                 id="confirm-modal"
                 isOpen={modalIsOpen}
                 style={customStyles}
-
-                appElement={document.getElementById('app') || undefined}
-                ariaHideApp={false}
                 >
                     <button 
                       type="button" 
