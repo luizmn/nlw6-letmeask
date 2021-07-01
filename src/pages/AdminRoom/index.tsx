@@ -50,7 +50,6 @@ export function AdminRoom() {
  //____________________END Modal layout_________________________________
 
 
-
  function handleOpenModal () {
   setmodalIsOpen(true);
   }
@@ -72,11 +71,8 @@ export function AdminRoom() {
   }
 
   async function handleDeleteQuestion(questionId: string) {
-    //TODO create modal
-    // if (window.confirm('Warning: This action is irreversible. Do you want to delete question?  ')) {
        await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
        handleCloseModal();
-    //}
   }
 
   return (
@@ -111,46 +107,41 @@ export function AdminRoom() {
                 >
                   <img src={deleteImg} alt="Delete question"/>
                 </button>
-
                 <Modal 
                 id="confirm-modal"
                 isOpen={modalIsOpen}
                 style={customStyles}
                 >
-                    <button 
-                      type="button" 
-                      onClick={handleCloseModal} 
-                      className="react-modal-close"
-                    >
-                    <img src={closeImg} alt="Fechar modal" />
+                  <button 
+                    type="button" 
+                    onClick={handleCloseModal} 
+                    className="react-modal-close"
+                  >
+                  <img src={closeImg} alt="Fechar modal" />
                   </button>
                   <h2>Warning!</h2>
                   <span>This action is irreversible. Do you want to delete the question?</span>
                   <div className="confirm-buttons">
                     <p>
-                  <Button 
-                  isOutlined 
-                  onClick={() => handleDeleteQuestion(question.id)}
-                  className="confirm-button"
-                  >
-                    Yes, delete.
-                  </Button>
-                  {/* <button onClick={() => handleDeleteQuestion(question.id)}>Delete</button> */}
-                  <Button
-                  onClick={handleCloseModal}
-                  className="confirm-button"
-                  >
-                    Cancel
-                  </Button>
-                  {/* <button onClick={handleCloseModal}>Cancel</button> */}
-                  </p>
+                      <Button 
+                      isOutlined 
+                      onClick={() => handleDeleteQuestion(question.id)}
+                      className="confirm-button"
+                      >
+                        Yes, delete.
+                      </Button>
+                      <Button
+                      onClick={handleCloseModal}
+                      className="confirm-button"
+                      >
+                        Cancel
+                      </Button>
+                    </p>
                   </div>
                 </Modal>
               </Question>
             );
-
           })}
-
         </div>
       </main>
     </div>
