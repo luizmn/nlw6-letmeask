@@ -46,6 +46,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Created components
 - Added modal for confirmations
 - Custom Favicon
+- Added question timestamp
 
 #### TODO branch
 
@@ -58,6 +59,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Responsivity
 - PWA Version
 - Styled Components
+- List all active rooms
 
 **Used Packages/Components**
 

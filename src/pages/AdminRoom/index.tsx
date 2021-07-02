@@ -125,7 +125,7 @@ export function AdminRoom() {
               author={question.author}
               isAnswered={question.isAnswered}
               isHighlighted={question.isHighlighted}
-              createdAt={format(parseISO(question.createdAt), 'dd/MMM/yyyy - HH:mm:ss a', { locale: ptBR }) || "N/A"}
+              createdAt={format(parseISO(question.createdAt), 'dd/MMM/yyyy - HH:mm:ss', { locale: ptBR }) || "N/A"}
               >
                 <div>
                  {!question.isAnswered && (
