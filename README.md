@@ -22,3 +22,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Create Modal component and custom styles
 - Create user types and permissions (today every authenticated user is an admin)
 - Refine styles
+- Use other databases
+- Create dark mode

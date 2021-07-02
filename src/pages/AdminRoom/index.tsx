@@ -5,6 +5,8 @@ import ptBR from 'date-fns/locale/pt-BR'
 
 import deleteImg from '../../assets/images/delete.svg';
 import closeImg from '../../assets/images/close.svg';
+import checkImg from '../../assets/images/check.svg';
+import answerImg from '../../assets/images/answer.svg';
 
 import { Button } from '../../components/Button';
 import { Question } from '../../components/Question';
@@ -75,6 +77,28 @@ export function AdminRoom() {
        handleCloseModal();
   }
 
+  async function handleCheckQuestionAsAnswered(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true,
+    });
+  }
+
+  
+  async function handleHighlightQuestion(questionId: string) {
+  
+  const isHighlighted = await database.ref(`rooms/${roomId}/questions/${questionId}/isHighlighted`).once('value');
+
+  
+  if (isHighlighted.val() !== true) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: true,
+    });
+  } else {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: false,
+    });
+  }
+  }
   return (
     <div id="page-room">
       <Header />
@@ -99,14 +123,34 @@ export function AdminRoom() {
               key={question.id}
               content={question.content}
               author={question.author}
+              isAnswered={question.isAnswered}
+              isHighlighted={question.isHighlighted}
               createdAt={format(parseISO(question.createdAt), 'dd/MMM/yyyy - HH:mm:ss a', { locale: ptBR }) || "N/A"}
               >
-                <button
-                type="button"
-                onClick={handleOpenModal}
-                >
-                  <img src={deleteImg} alt="Delete question"/>
-                </button>
+                <div>
+                 {!question.isAnswered && (
+                   <>
+                    <button
+                    type="button"
+                    onClick={() => handleHighlightQuestion(question.id)}
+                    >
+                      <img src={checkImg} alt="Mark question as answered"/>
+                    </button>
+                    <button
+                    type="button"
+                    onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                    >
+                      <img src={answerImg} alt="Highlight the question"/>
+                    </button>
+                   </>
+                 )}
+                  <button
+                  type="button"
+                  onClick={handleOpenModal}
+                  >
+                    <img src={deleteImg} alt="Delete question"/>
+                  </button>
+                </div>
                 <Modal 
                 id="confirm-modal"
                 isOpen={modalIsOpen}

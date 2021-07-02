@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import cn from 'classnames';
+
 import './styles.scss';
 
 type QuestionProps = {
@@ -9,6 +11,8 @@ type QuestionProps = {
   }
   createdAt: string;
   children?: ReactNode;
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
 }
 
 export function Question({
@@ -16,9 +20,19 @@ export function Question({
   author,
   createdAt,
   children,
+  isAnswered = false,
+  isHighlighted = false,
 }: QuestionProps) { //props: - get all info |  { field1, field2 } - get only what you need
   return (
-    <div className="question">
+    // <div className={`question ${isAnswered ? 'answered' : ''} 
+    //   ${isHighlighted ? 'highlighted' : ''}`}
+    // >
+    <div className={cn(
+      'question',
+      {answered: isAnswered},
+      {highlighted: isHighlighted && !isAnswered },
+    )}
+    >
       <p>{content}</p>
       <footer>
         <div className="user-info">
