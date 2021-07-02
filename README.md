@@ -12,6 +12,7 @@ Audience goes to the main page, insert the code they have and click "Join room".
 They join the room and can start making questions to the admin.
 
 **Basic permissions:**
+
 Admin: _Answer, highlight and delete questions._
 
 Audience: _Send and like questions._
