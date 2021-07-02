@@ -30,3 +30,9 @@ yarn-error.log*
 *.lock
 *.tgz
 template/src/__tests__/__snapshots__/
+
+#firebase
+.firebaserc
+.firebase/
+firebase-debug.log
+database.rules.json

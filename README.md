@@ -19,8 +19,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 #### TODO branch
 
+- Answer question function (auto check as answered)
 - Create Modal component and custom styles
 - Create user types and permissions (today every authenticated user is an admin)
 - Refine styles
 - Use other databases
 - Create dark mode
+- Responsivity
+- PWA Version
+- Styled Components
