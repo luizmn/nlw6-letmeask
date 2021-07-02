@@ -13,6 +13,7 @@ They join the room and can start making questions to the admin.
 
 **Basic permissions:**
 Admin: _Answer, highlight and delete questions._
+
 Audience: _Send and like questions._
 
 ## How to test
@@ -37,6 +38,8 @@ or
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+[Screenshot](/assets/images/letmeask_screenshot.jpg)
+
 #### Extra features changed from the original
 
 - Created components
@@ -57,10 +60,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 **Used Packages/Components**
 
-- [https://www.npmjs.com/package/react-modal](React Modal): Accessible modal dialog component for React.JS
-- [https://www.npmjs.com/package/sass](SASS): A pure JavaScript implementation of Sass
-- [https://www.npmjs.com/package/date-fns](Date-fns): provides the most comprehensive, yet simple and consistent toolset
+- [React Modal](https://www.npmjs.com/package/react-modal): Accessible modal dialog component for React.JS
+- [SASS](https://www.npmjs.com/package/sass): A pure JavaScript implementation of Sass
+- [Date-fns](https://www.npmjs.com/package/date-fns): provides the most comprehensive, yet simple and consistent toolset
   for manipulating JavaScript dates in a browser & Node.js.
-- [https://www.npmjs.com/package/firebase](Firebase): Intended for end-user client access from environments such as the Web.
-- [https://firebase.google.com](Google Firebase Main page): provides the tools and infrastructure you need to develop, grow, and earn money from your app. This package supports web (browser), mobile-web, and server (Node.js) clients.
-- [https://www.npmjs.com/package/classnames](Classnames): A simple JavaScript utility for conditionally joining classNames together.
+- [Firebase](https://www.npmjs.com/package/firebase): Intended for end-user client access from environments such as the Web.
+- [Google Firebase Main page](https://firebase.google.com): provides the tools and infrastructure you need to develop, grow, and earn money from your app. This package supports web (browser), mobile-web, and server (Node.js) clients.
+- [Classnames](https://www.npmjs.com/package/classnames): A simple JavaScript utility for conditionally joining classNames together.
