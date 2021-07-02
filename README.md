@@ -38,7 +38,7 @@ or
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-[Screenshot](/assets/images/letmeask_screenshot.jpg)
+[Screenshot](src/assets/images/letmeask_screenshot.jpg)
 
 #### Extra features changed from the original
 
